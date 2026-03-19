@@ -7,6 +7,7 @@
   "config_flow": true,
   "documentation": "https://github.com/Andre0512/hon/",
   "iot_class": "cloud_push",
+  "integration_type": "service",
   "issue_tracker": "https://github.com/Andre0512/hon/issues",
   "requirements": [
     "pyhOn==0.17.5"
