@@ -11,6 +11,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from pyhon import Hon
 
 from .const import DOMAIN, PLATFORMS, MOBILE_ID, CONF_REFRESH_TOKEN
+from .auth_helper import async_get_token
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,14 +32,35 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     session = aiohttp_client.async_get_clientsession(hass)
     if (config_dir := hass.config.config_dir) is None:
         raise ValueError("Missing Config Dir")
-    hon = await Hon(
-        email=entry.data[CONF_EMAIL],
-        password=entry.data[CONF_PASSWORD],
-        mobile_id=MOBILE_ID,
-        session=session,
-        test_data_path=Path(config_dir),
-        refresh_token=entry.data.get(CONF_REFRESH_TOKEN, ""),
-    ).create()
+    try:
+        hon = await Hon(
+            email=entry.data[CONF_EMAIL],
+            password=entry.data[CONF_PASSWORD],
+            mobile_id=MOBILE_ID,
+            session=session,
+            test_data_path=Path(config_dir),
+            refresh_token=entry.data.get(CONF_REFRESH_TOKEN, ""),
+        ).create()
+    except Exception as exc:
+        _LOGGER.warning("Standard login failed, trying alternative auth: %s", exc)
+        auth_data = await async_get_token(
+            entry.data[CONF_EMAIL], entry.data[CONF_PASSWORD], session
+        )
+        if auth_data and "refresh_token" in auth_data:
+            hon = await Hon(
+                email=entry.data[CONF_EMAIL],
+                password=entry.data[CONF_PASSWORD],
+                mobile_id=MOBILE_ID,
+                session=session,
+                test_data_path=Path(config_dir),
+                refresh_token=auth_data["refresh_token"],
+            ).create()
+        elif auth_data and auth_data.get("error") == "change_password":
+            _LOGGER.error("hOn requires a password change. Please use the app.")
+            raise
+        else:
+            _LOGGER.error("Alternative auth also failed")
+            raise
 
     # Save the new refresh token
     hass.config_entries.async_update_entry(
