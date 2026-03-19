@@ -8,10 +8,7 @@ from homeassistant.components.number import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTime, UnitOfTemperature
-from homeassistant.core import callback
-from homeassistant.helpers.entity import EntityCategory
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import HomeAssistantType
+from homeassistant.core import HomeAssistant, callback
 from pyhon.appliance import HonAppliance
 from pyhon.parameter.range import HonParameterRange
 
@@ -207,7 +204,7 @@ NUMBERS["WD"] = unique_entities(NUMBERS["WM"], NUMBERS["TD"])
 
 
 async def async_setup_entry(
-    hass: HomeAssistantType, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     entities = []
     entity: HonNumberEntity | HonConfigNumberEntity
@@ -230,7 +227,7 @@ class HonNumberEntity(HonEntity, NumberEntity):
 
     def __init__(
         self,
-        hass: HomeAssistantType,
+        hass: HomeAssistant,
         entry: ConfigEntry,
         device: HonAppliance,
         description: HonNumberEntityDescription,
@@ -285,7 +282,7 @@ class HonConfigNumberEntity(HonEntity, NumberEntity):
 
     def __init__(
         self,
-        hass: HomeAssistantType,
+        hass: HomeAssistant,
         entry: ConfigEntry,
         device: HonAppliance,
         description: HonConfigNumberEntityDescription,
