@@ -9,6 +9,8 @@ from homeassistant.components.number import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTime, UnitOfTemperature
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity import EntityCategory
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from pyhon.appliance import HonAppliance
 from pyhon.parameter.range import HonParameterRange
 

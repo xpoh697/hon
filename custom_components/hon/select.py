@@ -7,6 +7,9 @@ from homeassistant.components.select import SelectEntity, SelectEntityDescriptio
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTemperature, UnitOfTime, REVOLUTIONS_PER_MINUTE
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity import EntityCategory
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
 
 from . import const
 from .const import DOMAIN

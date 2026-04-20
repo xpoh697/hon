@@ -22,8 +22,12 @@ from homeassistant.const import (
     UnitOfTemperature,
 )
 from homeassistant.core import callback, HomeAssistant
+from homeassistant.helpers.entity import EntityCategory
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
 
 from . import const
+
 from .const import DOMAIN
 from .entity import HonEntity
 from .util import unique_entities, get_readable

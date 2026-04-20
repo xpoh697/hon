@@ -4,6 +4,8 @@ from typing import Any
 from homeassistant.components.lock import LockEntity, LockEntityDescription
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
 from pyhon.parameter.base import HonParameter
 from pyhon.parameter.range import HonParameterRange
 

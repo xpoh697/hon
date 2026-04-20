@@ -6,6 +6,9 @@ from typing import Any
 from homeassistant.components.switch import SwitchEntityDescription, SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback, HomeAssistant
+from homeassistant.helpers.entity import EntityCategory
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
 from pyhon.parameter.base import HonParameter
 from pyhon.parameter.range import HonParameterRange
 

@@ -9,6 +9,8 @@ from homeassistant.components.light import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
 from pyhon.appliance import HonAppliance
 from pyhon.parameter.range import HonParameterRange
 
