@@ -6,7 +6,9 @@ from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
 )
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.entity import DeviceInfo
 from pyhon.appliance import HonAppliance
+
 
 from .const import DOMAIN
 from .typedefs import HonEntityDescription
